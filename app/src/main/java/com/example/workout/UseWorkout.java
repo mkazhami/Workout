@@ -42,6 +42,7 @@ public class UseWorkout extends Activity{
 	final ArrayList<String> textViewSetsList = new ArrayList<String>();
 	final ArrayList<String> textViewRepsList = new ArrayList<String>();
 	final ArrayList<String> textViewInfoList = new ArrayList<String>();
+    final ArrayList<String> textViewTimedList = new ArrayList<String>();
 	
 
 	@Override
@@ -80,6 +81,7 @@ public class UseWorkout extends Activity{
 			textViewSetsList.add(e.getSets());
 			textViewRepsList.add(e.getReps());
 			textViewInfoList.add(e.getInfo());
+            textViewTimedList.add(e.getTimed());
 
             //set width of name TextView to be reasonable size depending on screen
             name.setWidth(width / 6);
@@ -93,7 +95,26 @@ public class UseWorkout extends Activity{
 				set.setTextSize(14f);
 				set.setWidth(150);
 				set.setGravity(Gravity.CENTER);
-                set.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+                if(e.getTimed().equals("y")) {
+                    final int count = i;
+                    final int exer = exerCount;
+                    set.setTextSize(15f);
+                    //open timer fragment on touch
+                    set.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            android.app.FragmentManager fm = UseWorkout.this.getFragmentManager();
+                            ExerciseTimer f = new ExerciseTimer();
+                            Bundle b = new Bundle();
+                            b.putInt("exerCode", exer*100 + count);
+                            f.setArguments(b);
+                            f.show(fm, "dialog");
+                        }
+                    });
+                }
+                else {
+                    set.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+                }
 				editTextList.add(new Pair<EditText, Integer>(set, (Integer) (exerCount*100 + i)));
 				row.addView(set);
 			}
@@ -116,6 +137,7 @@ public class UseWorkout extends Activity{
 					bundle.putString("sets", textViewSetsList.get(pos));
 					bundle.putString("reps", textViewRepsList.get(pos));
 					bundle.putString("info", textViewInfoList.get(pos));
+                    bundle.putString("timed", textViewTimedList.get(pos));
 					
 					android.app.FragmentManager fm = UseWorkout.this.getFragmentManager();
 					ExerciseInfoFrag f = new ExerciseInfoFrag();
@@ -130,6 +152,15 @@ public class UseWorkout extends Activity{
 	public ExerciseRecord getRecord(int code) {
 		return records.get(code);
 	}
+
+    public void recordTime(int code, int time) {
+        for(Pair<EditText, Integer> pair : editTextList) {
+            if(pair.getR() == code) {
+                pair.getL().setText(Integer.toString(time) + "s");
+                return;
+            }
+        }
+    }
 	
 	
 	@Override
@@ -150,31 +181,36 @@ public class UseWorkout extends Activity{
 	            	.setTitle("Record Workout")
 	            	.setMessage("Are you sure you want to record this workout?\nNo changes can be made after it is recorded.")
 	            	.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-	            		@Override
-	            		public void onClick(DialogInterface dialog, int which) {
-	            			int max = 0;
-	            			int maxCode = 0;
-	            			//Pair<EditText, Integer> maxPair;
-	            			//when recording the workout, first get all of the weights and add them to the records
-	            			for(Pair<EditText, Integer> pair: editTextList) {
-	            				final int code = pair.getR();
-	            				//int exerCode = (int) Math.floor(code/100);
-	            				String weight = pair.getL().getText().toString();
-	            				if (weight.length() > 0) {
-	            					int weightInt = Integer.parseInt(weight);
-		            				if (weightInt > max) {
-		            					max = weightInt;
-		            					maxCode = code;
-		            					//maxPair = pair;
-		            				}
-	            				}
-	            			}
-	            			if (max > 0) getRecord((int) Math.floor(maxCode/100)).recordSet(maxCode%100, Integer.toString(max));
-	            			FileManagement.mergeRecordList(records);
-	            			Toast.makeText(context_use_workout, "Recorded Workout!", Toast.LENGTH_SHORT).show();
-	            			finish();
-	            		}
-	            	})
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int count = 0;
+                            //when recording the workout, first get all of the weights and add them to the records
+                            for (Exercise e : workout.getExercises()) {
+                                int max = 0;
+                                int maxCode = 0;
+                                //get the max weight of each exercise
+                                for (int i = 0; i < Integer.parseInt(e.getSets()); i++) {
+                                    Pair<EditText, Integer> pair = editTextList.get(count);
+                                    final int code = pair.getR();
+                                    String weight = pair.getL().getText().toString();
+                                    weight = weight.replaceAll("s", "");
+                                    if (weight.length() > 0) {
+                                        int weightInt = Integer.parseInt(weight);
+                                        if (weightInt > max) {
+                                            max = weightInt;
+                                            maxCode = code;
+                                        }
+                                    }
+                                    count++;
+                                }
+                                if (max > 0)
+                                    getRecord((int) Math.floor(maxCode / 100)).recordSet(maxCode % 100, Integer.toString(max));
+                            }
+                            FileManagement.mergeRecordList(records);
+                            Toast.makeText(context_use_workout, "Recorded Workout!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    })
 	            	.setNegativeButton("No", null)
 	            	.show();
 	            return true;

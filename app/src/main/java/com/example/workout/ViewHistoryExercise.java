@@ -65,11 +65,11 @@ public class ViewHistoryExercise extends Activity{
 		}
 
         Date minDate = new Date(Integer.parseInt(firstDate[2]) - 1900,
-                Integer.parseInt(firstDate[1]),
-                Integer.parseInt(firstDate[0]));
+                                Integer.parseInt(firstDate[1]) - 1,
+                                Integer.parseInt(firstDate[0]));
         Date maxDate = new Date(Integer.parseInt(lastDate[2]) - 1900,
-         		 							Integer.parseInt(lastDate[1]),
-         		 							Integer.parseInt(lastDate[0]));
+         		 				Integer.parseInt(lastDate[1]) - 1,
+         		 				Integer.parseInt(lastDate[0]));
 
         final double DAY = 81300000;
 	    double THREEDAYS = DAY * 3;

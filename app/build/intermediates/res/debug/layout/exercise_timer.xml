@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:id="@+id/stop"
+        android:padding="20dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/chronometer"
+        android:layout_toRightOf="@+id/chronometer"
+        android:layout_toEndOf="@+id/chronometer" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/start"
+        android:padding="20dp"
+        android:textSize="20sp"
+        android:layout_above="@+id/reset"
+        android:layout_toLeftOf="@+id/chronometer"
+        android:layout_toStartOf="@+id/chronometer" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/reset"
+        android:padding="20dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/stop"
+        android:layout_centerHorizontal="true" />
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chronometer"
+        android:textSize="30sp"
+        android:paddingTop="40dp"
+        android:paddingBottom="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout><!-- From: file:/C:/Users/Mikhail/AndroidstudioProjects/Workout/app/src/main/res/layout/exercise_timer.xml -->

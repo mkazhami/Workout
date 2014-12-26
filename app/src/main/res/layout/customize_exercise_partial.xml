@@ -22,6 +22,26 @@
         android:ems="10" />
 
     <TextView
+        android:id="@+id/PartialCustomizeInfoTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Info" />
+
+    <EditText
+        android:id="@+id/PartialCustomizeInfoField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Timer"
+        android:id="@+id/TimeOrWeight"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"/>
+
+    <TextView
         android:id="@+id/PartialCustomizeSetsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,16 +67,4 @@
         android:layout_height="wrap_content"
         android:ems="10" />
 
-    <TextView
-        android:id="@+id/PartialCustomizeInfoTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Info" />
-
-    <EditText
-        android:id="@+id/PartialCustomizeInfoField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" />
-    
-    </LinearLayout>
+</LinearLayout>

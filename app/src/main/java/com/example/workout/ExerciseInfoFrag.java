@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ExerciseInfoFrag extends DialogFragment {
 	
@@ -31,10 +33,12 @@ public class ExerciseInfoFrag extends DialogFragment {
     	
     	//set values of EditTexts
     	Bundle bundle = getArguments();
+        String timed = bundle.getString("timed");
     	name.setText(bundle.getString("name"));
     	sets.setText(bundle.getString("sets"));
-    	reps.setText(bundle.getString("reps"));
+    	if(timed.equals("n")) reps.setText(bundle.getString("reps")); //only if exercise is not timed
     	info.setText(bundle.getString("info"));
+
     	
     	//don't want EditTexts to be editable
     	name.setEnabled(false);
@@ -53,8 +57,20 @@ public class ExerciseInfoFrag extends DialogFragment {
     			startActivity(intent);
     		}
     	});
-    	
-    	
+
+        //don't show reps count if it's a timed exercise
+    	if(timed.equals("y")) {
+            TextView repsTitle = (TextView) view.findViewById(R.id.exerciseInfoReps);
+            ((LinearLayout)name.getParent()).removeView(repsTitle);
+            ((LinearLayout)name.getParent()).removeView(reps);
+        }
+        //don't show info if it's blank
+        if(bundle.getString("info") == null || bundle.getString("info").equals("")) {
+            TextView infoTitle = (TextView) view.findViewById(R.id.exerciseInfoInfo);
+            ((LinearLayout) name.getParent()).removeView(infoTitle);
+            ((LinearLayout) name.getParent()).removeView(info);
+        }
+
     	return exerciseInfo.create();
 	}
 
