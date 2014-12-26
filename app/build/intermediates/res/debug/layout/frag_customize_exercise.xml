@@ -1,0 +1,51 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:paddingLeft="10dp"
+	android:paddingRight="10dp"
+	android:paddingTop="10dp"
+	tools:context=".FragCustomizeExercise" >
+
+    <TextView
+        android:id="@+id/CustomizeNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exercise Name" />
+
+    <EditText
+        android:id="@+id/CustomizeNameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/CustomizeSetsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sets" />
+
+    <EditText
+        android:id="@+id/CustomizeSetsField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/CustomizeRepsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reps" />
+
+    <EditText
+        android:id="@+id/CustomizeRepsField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+    
+    </LinearLayout><!-- From: file:/C:/Users/Mikhail/AndroidstudioProjects/WorkoutApp/app/src/main/res/layout/frag_customize_exercise.xml -->

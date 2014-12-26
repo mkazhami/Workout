@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:dslv="http://schemas.android.com/apk/res/com.example.workout"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CustomizeWorkout" >
+
+    <TextView
+        android:id="@+id/workoutName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/addMenuWorkoutTitle" />
+
+    <TextView
+        android:id="@+id/exerciseTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/workoutNameField"
+        android:layout_below="@+id/workoutNameField"
+        android:layout_marginTop="28dp"
+        android:text="@string/addMenuExcercisesTitle" />
+
+    <EditText
+        android:id="@+id/workoutNameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/workoutName"
+        android:layout_below="@+id/workoutName"
+        android:ems="10" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exerciseTitle" >
+
+		<com.example.workout.DragSortListView
+		    android:id="@+id/exerciseList"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:padding="3dp"
+		    android:layout_margin="3dp"
+		    android:dividerHeight="2dp"
+		    dslv:drag_enabled="true"
+		    dslv:collapsed_height="2dp"
+		    dslv:drag_scroll_start="0.33"
+		    dslv:max_drag_scroll_speed="0.5"
+		    dslv:float_alpha="0.6"
+		    dslv:float_background_color="@android:color/white"
+		    dslv:slide_shuffle_speed="0.3"
+		    dslv:sort_enabled="true"
+		    dslv:remove_mode="clickRemove"
+		    dslv:remove_enabled="true"
+		    dslv:drag_handle_id="@id/drag_handle"
+		    dslv:track_drag_sort="false"
+		    dslv:use_default_controller="true"
+		    dslv:click_remove_id="@id/click_remove" />
+	</LinearLayout>
+
+    <Button
+        android:id="@+id/addExerciseButton"
+        style="@style/AppBaseTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/exerciseTitle"
+        android:layout_toRightOf="@+id/workoutNameField"
+        android:minHeight="0dip"
+        android:minWidth="0dip"
+        android:text="@string/addMenuAddExercicesTitle"
+        android:textSize="10sp" />
+
+</RelativeLayout>
