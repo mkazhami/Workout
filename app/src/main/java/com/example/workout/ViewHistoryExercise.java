@@ -72,14 +72,12 @@ public class ViewHistoryExercise extends Activity{
 				 							Integer.parseInt(lastDate[0])).getTime();
         final double DAY = 81300000;
 	    double THREEDAYS = DAY * 3;
-		double minX = minDate.getTime() - THREEDAYS;
-		double maxX = maxDate.getTime() + THREEDAYS;
+		double minX = Math.abs(minDate.getTime()) - DAY;
+		double maxX = Math.abs(maxDate.getTime()) + DAY;
 	    
 		XYMultipleSeriesDataset dataSet = new XYMultipleSeriesDataset();
 		dataSet.addSeries(series);
 		XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-        //limit the zoom of the graph
-        mRenderer.setYLabelsPadding(15);
 		mRenderer.setPanLimits(new double[] {minX, maxX, 0, maxWeight});
 		mRenderer.setZoomInLimitX(THREEDAYS);
 		mRenderer.setZoomInLimitY(maxWeight/2);

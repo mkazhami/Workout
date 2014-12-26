@@ -88,14 +88,7 @@ public class UseWorkout extends Activity{
 			name.setText(e.getName());
 			row.addView(name);
 			//create the EditTexts for weight recording - one for each set
-			for(int i = 0; i < Integer.parseInt(e.getSets()); i++) {				
-				/*TextView divider = new TextView(this);
-				divider.setBackgroundColor(Color.BLACK);
-				divider.setWidth(2);
-                divider.setHeight(row.getHeight());
-				divider.setPadding(50,40,50,40);
-				row.addView(divider);*/
-				
+			for(int i = 0; i < Integer.parseInt(e.getSets()); i++) {
 				EditText set = new EditText(this);
 				set.setTextSize(14f);
 				set.setWidth(150);
@@ -103,14 +96,6 @@ public class UseWorkout extends Activity{
                 set.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 				editTextList.add(new Pair<EditText, Integer>(set, (Integer) (exerCount*100 + i)));
 				row.addView(set);
-				//creating dividers between EditTexts - looks better, not necessary
-				/*if(i == Integer.parseInt(e.getSets()) -1) {
-					TextView divider2 = new TextView(this);
-					divider2.setBackgroundColor(Color.BLACK);
-					divider2.setWidth(2);
-					divider2.setPadding(50,40,50,40);
-					row.addView(divider2);
-				}*/
 			}
 			HorizontalScrollView sv = new HorizontalScrollView(this);
 			sv.addView(row);
