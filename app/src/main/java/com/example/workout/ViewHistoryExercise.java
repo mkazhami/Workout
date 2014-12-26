@@ -12,6 +12,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -62,14 +63,14 @@ public class ViewHistoryExercise extends Activity{
 								 Integer.parseInt(strDate[0]));
 			series.add(date, Double.parseDouble(pair.getR()));
 		}
-		
-		
-		java.util.Date minDate = (java.util.Date) new GregorianCalendar(Integer.parseInt(firstDate[2]) - 1900,
-				 							Integer.parseInt(firstDate[1]),
-				 							Integer.parseInt(firstDate[0])).getTime();
-	    java.util.Date maxDate = (java.util.Date) new GregorianCalendar(Integer.parseInt(lastDate[2]) - 1900,
-				 							Integer.parseInt(lastDate[1]),
-				 							Integer.parseInt(lastDate[0])).getTime();
+
+        Date minDate = new Date(Integer.parseInt(firstDate[2]) - 1900,
+                Integer.parseInt(firstDate[1]),
+                Integer.parseInt(firstDate[0]));
+        Date maxDate = new Date(Integer.parseInt(lastDate[2]) - 1900,
+         		 							Integer.parseInt(lastDate[1]),
+         		 							Integer.parseInt(lastDate[0]));
+
         final double DAY = 81300000;
 	    double THREEDAYS = DAY * 3;
 		double minX = Math.abs(minDate.getTime()) - DAY;
@@ -78,9 +79,16 @@ public class ViewHistoryExercise extends Activity{
 		XYMultipleSeriesDataset dataSet = new XYMultipleSeriesDataset();
 		dataSet.addSeries(series);
 		XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-		mRenderer.setPanLimits(new double[] {minX, maxX, 0, maxWeight});
+        mRenderer.setXAxisMin(minX);
+        mRenderer.setXAxisMax(maxX);
+        mRenderer.setYAxisMin(0);
+        mRenderer.setYAxisMax(maxWeight + maxWeight/5);
+        mRenderer.setYLabelsPadding(15f);
+		mRenderer.setYLabelsColor(0, Color.GREEN);
+        mRenderer.setPanLimits(new double[] {minX, maxX, 0, maxWeight});
 		mRenderer.setZoomInLimitX(THREEDAYS);
 		mRenderer.setZoomInLimitY(maxWeight/2);
+        mRenderer.setZoomEnabled(true, false);
 		XYSeriesRenderer renderer = new XYSeriesRenderer();
 		mRenderer.setShowGrid(true);
 		mRenderer.addSeriesRenderer(renderer);
