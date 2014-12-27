@@ -14,7 +14,7 @@ import java.text.DecimalFormat;
 
 public class ExerciseTimer extends DialogFragment {
 
-    private long lastTime;
+    private long lastPause = 0;
     Chronometer mChronometer;
     private int code;
 
@@ -32,8 +32,6 @@ public class ExerciseTimer extends DialogFragment {
         code = bundle.getInt("exerCode");
 
         mChronometer = (Chronometer) view.findViewById(R.id.chronometer);
-        lastTime = SystemClock.elapsedRealtime();
-        mChronometer.setBase(SystemClock.elapsedRealtime());
 
         start = (Button) view.findViewById(R.id.start);
         start.setOnClickListener(mStartListener);
@@ -52,10 +50,9 @@ public class ExerciseTimer extends DialogFragment {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             UseWorkout activity = (UseWorkout) getActivity();
+            //get time on timer and record the number of seconds
             String[] parts = mChronometer.getText().toString().split(":");
-
             int seconds = 0, minutes = 0, hours = 0;
-
             if(parts.length == 2){
                 seconds = Integer.parseInt(parts[1]);
                 minutes = Integer.parseInt(parts[0]);
@@ -79,18 +76,20 @@ public class ExerciseTimer extends DialogFragment {
 
     View.OnClickListener mStartListener = new View.OnClickListener() {
         public void onClick(View v) {
-            mChronometer.start();
+        mChronometer.setBase(SystemClock.elapsedRealtime() + lastPause);
+        mChronometer.start();
         }
     };
     View.OnClickListener mStopListener = new View.OnClickListener() {
         public void onClick(View v) {
-            mChronometer.stop();
+        lastPause = mChronometer.getBase() - SystemClock.elapsedRealtime();
+        mChronometer.stop();
         }
     };
     View.OnClickListener mResetListener = new View.OnClickListener() {
         public void onClick(View v) {
-            mChronometer.setBase(SystemClock.elapsedRealtime());
-            lastTime = SystemClock.elapsedRealtime();
+        mChronometer.setBase(SystemClock.elapsedRealtime());
+        lastPause = 0;
         }
     };
 }

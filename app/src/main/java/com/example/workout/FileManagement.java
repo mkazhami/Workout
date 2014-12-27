@@ -149,7 +149,7 @@ public class FileManagement {
 	
 	
 
-	/*********************** RECORDS FUNCTIONS ************************/
+	/******************************** RECORDS FUNCTIONS *********************************/
 	public static void mergeRecordList(ArrayList<ExerciseRecord> erList) {
 		for(ExerciseRecord er : erList) {
 			String name = er.getName();
