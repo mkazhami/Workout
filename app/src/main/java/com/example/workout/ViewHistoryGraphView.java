@@ -18,7 +18,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class ViewHistoryExercise extends Activity{
+public class ViewHistoryGraphView extends Activity{
 
 	String exerName;
 	ArrayList<Pair<String, String>> sets;

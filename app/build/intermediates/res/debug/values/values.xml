@@ -26,6 +26,7 @@
     <string name="addMenuWorkoutTitle">Workout Name</string>
     <string name="addWorkout">Add Workout</string>
     <string name="app_name">Workout</string>
+    <string name="hello_world">Hello world!</string>
     <string name="mainTitle">Workouts</string>
     <string name="record_workout">Record</string>
     <string name="selectExerciseTitle">Select Exercise</string>
@@ -33,6 +34,7 @@
     <string name="title_activity_customize_workout">Customize Workout</string>
     <string name="title_activity_use_workout">Use Workout</string>
     <string name="title_activity_view_history_exercise">View History</string>
+    <string name="title_activity_view_history_list">ViewHistoryList</string>
     <string name="title_activity_view_history_menu">View History</string>
     <!-- From: file:/C:/Users/Mikhail/AndroidstudioProjects/Workout/app/src/main/res/values/styles.xml -->
     <eat-comment/>

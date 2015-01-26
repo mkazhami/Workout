@@ -84,7 +84,7 @@ public class UseWorkout extends Activity{
             textViewTimedList.add(e.getTimed());
 
             //set width of name TextView to be reasonable size depending on screen
-            name.setWidth(width / 6);
+            name.setWidth(width / 5);
 			name.setPadding(10, 40, 30, 40);
 			name.setGravity(Gravity.CENTER);
 			name.setText(e.getName());
@@ -119,7 +119,7 @@ public class UseWorkout extends Activity{
 				row.addView(set);
 			}
 			HorizontalScrollView sv = new HorizontalScrollView(this);
-			sv.addView(row);
+            sv.addView(row);
 			workoutTable.addView(sv, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			exerCount++;
 		}
@@ -183,6 +183,7 @@ public class UseWorkout extends Activity{
 	            	.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            //TODO: keep track of all weights instead of just max
                             int count = 0;
                             //when recording the workout, first get all of the weights and add them to the records
                             for (Exercise e : workout.getExercises()) {
@@ -203,8 +204,9 @@ public class UseWorkout extends Activity{
                                     }
                                     count++;
                                 }
-                                if (max > 0)
+                                if (max > 0) {
                                     getRecord((int) Math.floor(maxCode / 100)).recordSet(maxCode % 100, Integer.toString(max));
+                                }
                             }
                             FileManagement.mergeRecordList(records);
                             Toast.makeText(context_use_workout, "Recorded Workout!", Toast.LENGTH_SHORT).show();

@@ -24,12 +24,14 @@ public class WorkoutObjects {
 	public final static String EXERCISE_FILE_NAME = "exercises.txt";
 	public final static String WORKOUT_FILE_NAME = "workouts.txt";
 	public final static String RECORD_FILE_NAME = "records.txt";
+    public final static String FULL_RECORD_FILE_NAME = "full_records.txt";
 	
 	public static WorkoutList workoutList;
 	public static ArrayList<String> workoutNamesList;
 	public static ArrayList<Exercise> exerciseList;
 	public static ArrayList<String> exerciseNamesList; //in alphabetical order
 	public static ArrayList<ExerciseRecord> recordList;
+    public static ArrayList<Pair<String, ArrayList<Pair<String, String>>>> fullRecordList;
 	
 	
 }

@@ -1,6 +1,8 @@
 package com.example.workout;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,11 +31,32 @@ public class ViewHistoryMenu extends Activity{
 		exerciseList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(ViewHistoryMenu.this, ViewHistoryExercise.class);
-				Bundle extras = new Bundle();
-				extras.putString("exerName", WorkoutObjects.recordList.get(position).getName());
-				intent.putExtras(extras);
-				startActivity(intent);
+                final int pos = position;
+                //TODO: bring up an option to view a graph or a list of records
+                CharSequence items[] = new CharSequence[] {"List", "Graph"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewHistoryMenu.this);
+                builder.setTitle("Record Representation");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            if(which == 0) { //bring up list view
+                            Intent intent = new Intent(ViewHistoryMenu.this, ViewHistoryListView.class);
+                            Bundle extras = new Bundle();
+                            extras.putString("exerName", WorkoutObjects.recordList.get(pos).getName());
+                            intent.putExtras(extras);
+                            startActivity(intent);
+                        }
+                        else if (which == 1) { //bring up graph view
+                            Intent intent = new Intent(ViewHistoryMenu.this, ViewHistoryGraphView.class);
+                            Bundle extras = new Bundle();
+                            extras.putString("exerName", WorkoutObjects.recordList.get(pos).getName());
+                            intent.putExtras(extras);
+                            startActivity(intent);
+                        }
+                    }
+                });
+                builder.show();
 			}
 		});
 

@@ -22,5 +22,7 @@
     <string name="action_history">View History</string>
     <string name="title_activity_view_history_menu">View History</string>
     <string name="title_activity_view_history_exercise">View History</string>
+    <string name="title_activity_view_history_list">ViewHistoryList</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
