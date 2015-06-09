@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.workout"
+    package="com.workout"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.workout.MainActivity"
+            android:name="com.workout.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,29 +28,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.workout.CustomizeWorkout"
+            android:name="com.workout.CustomizeWorkout"
             android:label="@string/title_activity_customize_workout" >
         </activity>
         <activity
-            android:name="com.example.workout.UseWorkout"
+            android:name="com.workout.UseWorkout"
             android:label="@string/title_activity_use_workout" >
         </activity>
         <activity
-            android:name="com.example.workout.AddExercise"
+            android:name="com.workout.AddExercise"
             android:label="@string/title_activity_customize_exercise" >
         </activity>
         <activity
-            android:name="com.example.workout.ViewHistoryMenu"
+            android:name="com.workout.ViewHistoryMenu"
             android:label="@string/title_activity_view_history_menu" >
         </activity>
         <activity
-            android:name="com.example.workout.ViewHistoryGraphView"
+            android:name="com.workout.ViewHistoryGraphView"
             android:label="@string/title_activity_view_history_exercise" >
         </activity>
         <activity android:name="org.achartengine.GraphicalActivity" >
         </activity>
         <activity
-            android:name="com.example.workout.ViewHistoryListView"
+            android:name="com.workout.ViewHistoryListView"
             android:label="@string/title_activity_view_history_list" >
         </activity>
     </application>
