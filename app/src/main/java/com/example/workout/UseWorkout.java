@@ -1,6 +1,8 @@
 package com.example.workout;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 public class UseWorkout extends Activity{
 
 	private Workout workout;
+    DBAdapter db;
 	
 	TableLayout workoutTable;
 	
@@ -49,6 +52,8 @@ public class UseWorkout extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.use_workout);
+
+        db = new DBAdapter(this);
 		
 		Bundle bundle = this.getIntent().getExtras();
 		workout = new Workout();
@@ -184,7 +189,14 @@ public class UseWorkout extends Activity{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //TODO: keep track of all weights instead of just max
+                            //TODO: NO MORE WRITING TO FILES - ONLY DB
                             int count = 0;
+                            // get current time
+                            Calendar c = Calendar.getInstance();
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+                            String date = df.format(c.getTime());
+                            db.open();
+
                             //when recording the workout, first get all of the weights and add them to the records
                             for (Exercise e : workout.getExercises()) {
                                 int max = 0;
@@ -195,6 +207,10 @@ public class UseWorkout extends Activity{
                                     final int code = pair.getR();
                                     String weight = pair.getL().getText().toString();
                                     weight = weight.replaceAll("s", "");
+
+
+									db.insertRecord(e.getName(), date, Integer.parseInt(weight));
+
                                     if (weight.length() > 0) {
                                         int weightInt = Integer.parseInt(weight);
                                         if (weightInt > max) {
@@ -210,6 +226,7 @@ public class UseWorkout extends Activity{
                             }
                             FileManagement.mergeRecordList(records);
                             Toast.makeText(context_use_workout, "Recorded Workout!", Toast.LENGTH_SHORT).show();
+                            db.close();
                             finish();
                         }
                     })

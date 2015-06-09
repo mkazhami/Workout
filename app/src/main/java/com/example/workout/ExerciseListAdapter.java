@@ -14,6 +14,7 @@ public class ExerciseListAdapter extends BaseAdapter {
 
 	ExerciseListFrag context;
 	static ArrayList<String> list;
+    DBAdapter db;
 	
 	public ExerciseListAdapter(ExerciseListFrag context, ArrayList<String> arrayList) {
 		this.context = context;
@@ -41,6 +42,8 @@ public class ExerciseListAdapter extends BaseAdapter {
 			LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             view = inflater.inflate(R.layout.simplerow, parent, false);
 		}
+
+        db = new DBAdapter(parent.getContext());
 		
 		final String name = list.get(index);
 		
@@ -70,8 +73,12 @@ public class ExerciseListAdapter extends BaseAdapter {
 		deleteExercise.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+                //TODO: NO MORE WRITING TO FILE - ONLY DB
+                db.open();
+                db.deleteExercise(name);
+                db.close();
 				ExerciseListFrag.removeFromList(name);
-			}
+            }
 		});
 		
 		return view;

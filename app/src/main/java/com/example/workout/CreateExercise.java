@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,14 +20,17 @@ public class CreateExercise extends DialogFragment{
 	
 	private int caller;
 
+
 	@Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
 		Bundle args = getArguments();
 		caller = args.getInt("caller");
 		AlertDialog.Builder createExercise = new AlertDialog.Builder(getActivity());
     	final View view = getActivity().getLayoutInflater().inflate(R.layout.create_exercise, null);
     	createExercise.setView(view);
-    	
+
+
     	editName = (EditText) view.findViewById(R.id.CreateExerciseNameField);
     	editName.addTextChangedListener(new TextWatcher() {
     		public void afterTextChanged(Editable s) {
@@ -47,6 +52,7 @@ public class CreateExercise extends DialogFragment{
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
+            //TODO: NO MORE WRITING TO FILE - ONLY DB
         	if(name == null || name.equals("")) {
         		Toast.makeText(getActivity(), "Invalid name!", Toast.LENGTH_SHORT).show();
         	}
@@ -54,6 +60,13 @@ public class CreateExercise extends DialogFragment{
         		Toast.makeText(getActivity(), "Exercise name already exists!", Toast.LENGTH_SHORT).show();
         	}
         	else{
+                DBAdapter db = new DBAdapter(getActivity());
+                db.open();
+                long result = db.insertExercise(name);
+                if(result < 1) {
+                    Log.d("WORKOUT", "FAILED TO INSERT");
+                }
+                db.close();
         		FileManagement.writeExerciseFile();
         		if(caller == WorkoutObjects.EXERCISE_LIST) ExerciseListFrag.notifyChange();
             	dialog.dismiss();

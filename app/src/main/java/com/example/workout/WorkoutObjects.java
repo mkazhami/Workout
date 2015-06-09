@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class WorkoutObjects {
 
+    public static final String DBG = "Workout";
+
 	public static final int OK_RESULT = 1;
 	public static final int BAD_RESULT = 2;
 	
@@ -32,6 +34,7 @@ public class WorkoutObjects {
 	public static ArrayList<String> exerciseNamesList; //in alphabetical order
 	public static ArrayList<ExerciseRecord> recordList;
     public static ArrayList<Pair<String, ArrayList<Pair<String, String>>>> fullRecordList;
+
 	
 	
 }

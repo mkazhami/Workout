@@ -1,5 +1,6 @@
 package com.example.workout;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.os.Bundle;
@@ -28,11 +29,24 @@ public class MainActivity extends Activity {
 	private static MyAdapter adapter;
 	private static MatrixCursor cursor;
 
+    DBAdapter db;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+        db = new DBAdapter(this);
+        db.open();
+        db.insertExercise("test");
+        db.insertRecord("test", "2015-01-01", 5);
+        db.insertRecord("test", "2015-01-01", 5);
+        db.insertRecord("test", "2015-01-01", 5);
+        db.insertRecord("test", "2015-01-01", 5);
+        db.insertRecord("test", "2015-01-01", 5);
+
+        db.close();
 		
 		if(WorkoutObjects.workoutList == null) WorkoutObjects.workoutList = WorkoutList.getInstance();
 		WorkoutObjects.workoutNamesList = new ArrayList<String>();
