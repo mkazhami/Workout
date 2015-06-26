@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -39,7 +40,10 @@ public class CustomizeExercisePartial extends DialogFragment{
 		Bundle bundle = getArguments();
 		exercise = bundle.getParcelable(WorkoutObjects.EXER_KEY);
 		position = bundle.getInt("position");
-		
+
+        //stop keyboard from popping up
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 		AlertDialog.Builder editExercise = new AlertDialog.Builder(getActivity());
     	final View view = getActivity().getLayoutInflater().inflate(R.layout.customize_exercise_partial, null);
     	editExercise.setView(view);

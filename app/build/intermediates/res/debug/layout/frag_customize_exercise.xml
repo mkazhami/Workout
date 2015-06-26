@@ -1,13 +1,13 @@
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:paddingLeft="10dp"
-	android:paddingRight="10dp"
-	android:paddingTop="10dp"
-	tools:context=".FragCustomizeExercise" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    tools:context=".FragCustomizeExercise">
 
     <TextView
         android:id="@+id/CustomizeNameTitle"
@@ -47,5 +47,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10" />
-    
+
     </LinearLayout><!-- From: file:/C:/Users/Mikhail/AndroidstudioProjects/Workout/app/src/main/res/layout/frag_customize_exercise.xml -->

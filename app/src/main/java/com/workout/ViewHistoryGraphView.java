@@ -1,6 +1,8 @@
 package com.workout;
 
-import java.sql.Date;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -12,9 +14,11 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -22,16 +26,42 @@ public class ViewHistoryGraphView extends Activity{
 
 	String exerName;
 	ArrayList<Pair<String, String>> sets;
+
+    DBAdapter db;
+    String[] dates;
+    String[] values;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_history_exercise);
+
+        Bundle bundle = this.getIntent().getExtras();
+        exerName = bundle.getString("exerName");
+
+        db = new DBAdapter(this);
+        db.open();
+        // get all dates and weights for given exercise - store in arraylist to be added to timeseries
+        Cursor c = db.getAllRecords(exerName);
+        final int rowCount = c.getCount();
+        dates = new String[rowCount];
+        values = new String[rowCount];
+        if(c.moveToFirst()) {
+            int counter = 0;
+            do {
+                // query returns date in first column, value in second
+                dates[counter] = c.getString(0);
+                values[counter] = c.getString(1);
+                counter++;
+            } while(c.moveToNext());
+        } else {
+            Log.d(WorkoutObjects.DBG, "No records were found for exercise " + exerName);
+        }
+        db.close();
+
 		
 		sets = new ArrayList<Pair<String, String>>();
-		
-		Bundle bundle = this.getIntent().getExtras();
-		exerName = bundle.getString("exerName");
+
 		for(ExerciseRecord er : WorkoutObjects.recordList) {
 			if(er.getName().equals(exerName)) {
                 //store the related set records in a local arraylist
@@ -47,13 +77,15 @@ public class ViewHistoryGraphView extends Activity{
 	
 	private void createGraph() {
         int size = sets.size();
-        String[] firstDate = sets.get(0).getL().split("/");
-        String[] lastDate = sets.get(size - 1).getL().split("/");
+        //String[] firstDate = sets.get(0).getL().split("/");
+        //String[] lastDate = sets.get(size - 1).getL().split("/");
+        String[] firstDate = dates[0].split("-");
+        String[] lastDate = dates[dates.length - 1].split("-");
         double maxWeight = 0;
 
         TimeSeries series = new TimeSeries("Line");
         //add weight/date pairs to the graph series
-        for (int i = 0; i < size; i++) {
+        /*for (int i = 0; i < size; i++) {
             Pair<String, String> pair = sets.get(i);
             String[] strDate = pair.getL().split("/");
             if (Double.parseDouble(pair.getR()) > maxWeight)
@@ -63,15 +95,26 @@ public class ViewHistoryGraphView extends Activity{
                     Integer.parseInt(strDate[1]) - 1,
                     Integer.parseInt(strDate[0]));
             series.add(date, Double.parseDouble(pair.getR()));
+        }*/
+        final int rowCount = dates.length;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        for(int i = 0; i < rowCount; i++) {
+            String[] splitDate = dates[i].split("-");
+            Date date = new Date(Integer.parseInt(splitDate[0]) - 1900,
+                    Integer.parseInt(splitDate[1]) - 1,
+                    Integer.parseInt(splitDate[2]));
+            Double val = Double.parseDouble(values[i]);
+            if(val > maxWeight) { maxWeight = val; }
+            series.add(date, val);
         }
 
         //lowest and highest dates, used to scale the graph
-        Date minDate = new Date(Integer.parseInt(firstDate[2]) - 1900,
+        Date minDate = new Date(Integer.parseInt(firstDate[0]) - 1900,
                 Integer.parseInt(firstDate[1]) - 1,
-                Integer.parseInt(firstDate[0]));
-        Date maxDate = new Date(Integer.parseInt(lastDate[2]) - 1900,
+                Integer.parseInt(firstDate[2]));
+        Date maxDate = new Date(Integer.parseInt(lastDate[0]) - 1900,
                 Integer.parseInt(lastDate[1]) - 1,
-                Integer.parseInt(lastDate[0]));
+                Integer.parseInt(lastDate[2]));
 
         final double DAY = 81300000;
         double THREEDAYS = DAY * 3;

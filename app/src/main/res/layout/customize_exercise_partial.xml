@@ -1,70 +1,77 @@
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:paddingLeft="10dp"
-	android:paddingRight="10dp"
-	android:paddingTop="10dp"
-	tools:context=".FragCustomizeExercise" >
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
 
-    <TextView
-        android:id="@+id/PartialCustomizeNameTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Exercise Name" />
+    <LinearLayout
 
-    <EditText
-        android:id="@+id/PartialCustomizeNameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" />
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        tools:context=".FragCustomizeExercise" >
 
-    <TextView
-        android:id="@+id/PartialCustomizeInfoTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Info" />
+        <TextView
+            android:id="@+id/PartialCustomizeNameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exercise Name" />
 
-    <EditText
-        android:id="@+id/PartialCustomizeInfoField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" />
+        <EditText
+            android:id="@+id/PartialCustomizeNameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Timer"
-        android:id="@+id/TimeOrWeight"
-        android:paddingTop="15dp"
-        android:paddingBottom="10dp"/>
+        <TextView
+            android:id="@+id/PartialCustomizeInfoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Info" />
 
-    <TextView
-        android:id="@+id/PartialCustomizeSetsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sets" />
+        <EditText
+            android:id="@+id/PartialCustomizeInfoField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
 
-    <EditText
-        android:id="@+id/PartialCustomizeSetsField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" >
-        <requestFocus />
-    </EditText>
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Timer"
+            android:id="@+id/TimeOrWeight"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"/>
 
-    <TextView
-        android:id="@+id/PartialCustomizeRepsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reps" />
+        <TextView
+            android:id="@+id/PartialCustomizeSetsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sets" />
 
-    <EditText
-        android:id="@+id/PartialCustomizeRepsField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" />
+        <EditText
+            android:id="@+id/PartialCustomizeSetsField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+            <requestFocus />
+        </EditText>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/PartialCustomizeRepsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reps" />
+
+        <EditText
+            android:id="@+id/PartialCustomizeRepsField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
+
+    </LinearLayout>
+</ScrollView>

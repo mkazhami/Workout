@@ -39,12 +39,13 @@ public class MainActivity extends Activity {
 
         db = new DBAdapter(this);
         db.open();
+		db.clearExerciseRecords("test");
         db.insertExercise("test");
         db.insertRecord("test", "2015-01-01", 5);
-        db.insertRecord("test", "2015-01-01", 5);
-        db.insertRecord("test", "2015-01-01", 5);
-        db.insertRecord("test", "2015-01-01", 5);
-        db.insertRecord("test", "2015-01-01", 5);
+        db.insertRecord("test", "2015-01-02", 10);
+        db.insertRecord("test", "2015-01-03", 15);
+        db.insertRecord("test", "2015-01-04", 20);
+        db.insertRecord("test", "2015-01-05", 25);
 
         db.close();
 		

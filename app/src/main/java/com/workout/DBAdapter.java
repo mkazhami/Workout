@@ -96,14 +96,24 @@ public class DBAdapter {
     // delete an exercise
     public boolean deleteExercise(String name) {
         try {
-            // first delete all records
-            db.delete(TABLE_EXERCISE_RECORDS, KEY_NAME + "='" + name + "'", null);
+            clearExerciseRecords(name);
             // then delete exercise
         } catch(Exception e) {
             Log.i(WorkoutObjects.DBG, "No records to delete for " + name);
             e.printStackTrace();
         }
         return db.delete(TABLE_EXERCISE, KEY_NAME + "='" + name + "'", null) > 0;
+    }
+
+    public boolean clearExerciseRecords(String name) {
+        try {
+            db.delete(TABLE_EXERCISE_RECORDS, KEY_NAME + "='" + name + "'", null);
+        } catch (Exception e) {
+            Log.i(WorkoutObjects.DBG, "No records to delete for " + name);
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     // gets all exercises
