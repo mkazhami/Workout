@@ -58,44 +58,18 @@ public class ViewHistoryGraphView extends Activity{
             Log.d(WorkoutObjects.DBG, "No records were found for exercise " + exerName);
         }
         db.close();
-
-		
-		sets = new ArrayList<Pair<String, String>>();
-
-		for(ExerciseRecord er : WorkoutObjects.recordList) {
-			if(er.getName().equals(exerName)) {
-                //store the related set records in a local arraylist
-				for(Pair<String, String> pair : er.getSets()) {
-					sets.add(new Pair<String, String>(pair.getL(), pair.getR()));
-				}
-				break;
-			}
-		}
 		
 		createGraph();
 	}
 	
 	private void createGraph() {
-        int size = sets.size();
-        //String[] firstDate = sets.get(0).getL().split("/");
-        //String[] lastDate = sets.get(size - 1).getL().split("/");
         String[] firstDate = dates[0].split("-");
         String[] lastDate = dates[dates.length - 1].split("-");
         double maxWeight = 0;
 
         TimeSeries series = new TimeSeries("Line");
+
         //add weight/date pairs to the graph series
-        /*for (int i = 0; i < size; i++) {
-            Pair<String, String> pair = sets.get(i);
-            String[] strDate = pair.getL().split("/");
-            if (Double.parseDouble(pair.getR()) > maxWeight)
-                maxWeight = Double.parseDouble(pair.getR());
-            @SuppressWarnings("deprecation")
-            Date date = new Date(Integer.parseInt(strDate[2]) - 1900,
-                    Integer.parseInt(strDate[1]) - 1,
-                    Integer.parseInt(strDate[0]));
-            series.add(date, Double.parseDouble(pair.getR()));
-        }*/
         final int rowCount = dates.length;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
         for(int i = 0; i < rowCount; i++) {

@@ -194,41 +194,24 @@ public class UseWorkout extends Activity{
                             int count = 0;
                             // get current time
                             Calendar c = Calendar.getInstance();
-                            SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                             String date = df.format(c.getTime());
                             db.open();
 
                             //when recording the workout, first get all of the weights and add them to the records
                             for (Exercise e : workout.getExercises()) {
-                                int max = 0;
-                                int maxCode = 0;
-                                //get the max weight of each exercise
                                 for (int i = 0; i < Integer.parseInt(e.getSets()); i++) {
                                     Pair<EditText, Integer> pair = editTextList.get(count);
-                                    final int code = pair.getR();
-                                    String weight = pair.getL().getText().toString();
-                                    weight = weight.replaceAll("s", "");
-
+                                    String weight = pair.getL().getText().toString().replaceAll("s", "");
 
 									if(!weight.equals("") && Integer.parseInt(weight) != 0) {
                                         db.insertRecord(e.getName(), date, Integer.parseInt(weight));
                                     }
                                     else { Log.d(WorkoutObjects.DBG, "Not adding exercise record - no/invalid value"); }
 
-                                    if (weight.length() > 0) {
-                                        int weightInt = Integer.parseInt(weight);
-                                        if (weightInt > max) {
-                                            max = weightInt;
-                                            maxCode = code;
-                                        }
-                                    }
                                     count++;
                                 }
-                                if (max > 0) {
-                                    getRecord((int) Math.floor(maxCode / 100)).recordSet(maxCode % 100, Integer.toString(max));
-                                }
                             }
-                            FileManagement.mergeRecordList(records);
                             Toast.makeText(context_use_workout, "Recorded Workout!", Toast.LENGTH_SHORT).show();
                             db.close();
                             finish();

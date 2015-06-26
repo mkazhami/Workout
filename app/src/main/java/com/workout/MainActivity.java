@@ -39,26 +39,34 @@ public class MainActivity extends Activity {
 
         db = new DBAdapter(this);
         db.open();
-		db.clearExerciseRecords("test");
-        db.insertExercise("test");
-        db.insertRecord("test", "2015-01-01", 5);
-        db.insertRecord("test", "2015-01-02", 10);
-        db.insertRecord("test", "2015-01-03", 15);
-        db.insertRecord("test", "2015-01-04", 20);
-        db.insertRecord("test", "2015-01-05", 25);
+        // populate global exercise list - needed for create exercise list adapter
+        WorkoutObjects.exerciseNamesList = new ArrayList<String>();
+        Cursor c = db.getAllExercises();
+        while(c.moveToNext()) {
+            WorkoutObjects.exerciseNamesList.add(c.getString(0));
+        }
+		//db.clearAllRecords();
+		//db.clearAllExercises();
+		//db.clearExerciseRecords("test");
+        //db.insertExercise("test");
+        //db.insertRecord("test", "2015-01-01", 5);
+        //db.insertRecord("test", "2015-01-02", 10);
+        //db.insertRecord("test", "2015-01-03", 15);
+        //db.insertRecord("test", "2015-01-04", 20);
+        //db.insertRecord("test", "2015-01-05", 25);
 
         db.close();
 		
 		if(WorkoutObjects.workoutList == null) WorkoutObjects.workoutList = WorkoutList.getInstance();
 		WorkoutObjects.workoutNamesList = new ArrayList<String>();
-		WorkoutObjects.exerciseNamesList = new ArrayList<String>();
-		WorkoutObjects.recordList = new ArrayList<ExerciseRecord>();
+		//WorkoutObjects.exerciseNamesList = new ArrayList<String>();
+		//WorkoutObjects.recordList = new ArrayList<ExerciseRecord>();
 
 		WorkoutObjects.FOLDER_NAME = getBaseContext().getFilesDir().toString() + "/";
 
 		FileManagement.fillWorkoutList();
-		FileManagement.fillExerciseList();
-		FileManagement.fillRecordList();
+		//FileManagement.fillExerciseList();
+		//FileManagement.fillRecordList();
 		
 		dslv = (DragSortListView) findViewById(R.id.workoutList);
 		String[] cols = {"name"};

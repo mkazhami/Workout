@@ -72,6 +72,7 @@ public class DBAdapter {
 
     // insert a new exercise
     public long insertExercise(String name) {
+        WorkoutObjects.exerciseNamesList.add(name);
         ContentValues cv = new ContentValues();
         cv.put(KEY_NAME, name);
         return db.insert(TABLE_EXERCISE, null, cv);
@@ -107,18 +108,35 @@ public class DBAdapter {
 
     public boolean clearExerciseRecords(String name) {
         try {
-            db.delete(TABLE_EXERCISE_RECORDS, KEY_NAME + "='" + name + "'", null);
+            return db.delete(TABLE_EXERCISE_RECORDS, KEY_NAME + "='" + name + "'", null) > 0;
         } catch (Exception e) {
             Log.i(WorkoutObjects.DBG, "No records to delete for " + name);
             e.printStackTrace();
             return false;
         }
-        return true;
+    }
+
+    public void clearAllRecords() {
+        try {
+            db.delete(TABLE_EXERCISE_RECORDS, null, null);
+        } catch (Exception e) {
+            Log.i(WorkoutObjects.DBG, "No records to delete");
+            e.printStackTrace();
+        }
+    }
+
+    public void clearAllExercises() {
+        try {
+            db.delete(TABLE_EXERCISE, null, null);
+        } catch (Exception e) {
+            Log.i(WorkoutObjects.DBG, "No exercises to delete");
+            e.printStackTrace();
+        }
     }
 
     // gets all exercises
     public Cursor getAllExercises() {
-        return db.query(TABLE_EXERCISE, new String[]{KEY_NAME}, null, null, null, null, KEY_NAME);
+        return db.query(true, TABLE_EXERCISE, new String[]{KEY_NAME}, null, null, null, null, KEY_NAME, null);
     }
 
     // gets all exercise records of exercise with name "name"
@@ -136,6 +154,33 @@ public class DBAdapter {
     public boolean updateRecord(String name, String date, int value) {
         //TODO: implement exercise record upating - not really important
         return true;
+    }
+
+    public int getRecordCount(String name) {
+        try {
+            Cursor mCount= db.rawQuery("select count(*) from " + TABLE_EXERCISE_RECORDS + " where name = '" + name + "'", null);
+            mCount.moveToFirst();
+            return mCount.getInt(0);
+        } catch(Exception e) {
+            Log.i(WorkoutObjects.DBG, "Unable to get record count");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public boolean doesExerciseExist(String name) {
+        int count = -1;
+        try {
+            Cursor mCount= db.rawQuery("select count(*) from " + TABLE_EXERCISE + " where name = '" + name + "'", null);
+            mCount.moveToFirst();
+            count = mCount.getInt(0);
+        } catch(Exception e) {
+            Log.i(WorkoutObjects.DBG, "Unable to get record count");
+            e.printStackTrace();
+        } finally {
+            if(count > 0) { return true; }
+            else { return false; }
+        }
     }
 
 }

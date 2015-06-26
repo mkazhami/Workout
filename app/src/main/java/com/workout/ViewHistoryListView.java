@@ -1,6 +1,7 @@
 package com.workout;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -22,6 +23,7 @@ public class ViewHistoryListView extends Activity {
     String exerName;
     ArrayList<Pair<String, String>> sets;
     ArrayList<Pair<String, String>> sortedByDateSets;
+    DBAdapter db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +34,33 @@ public class ViewHistoryListView extends Activity {
         exerName = bundle.getString("exerName");
         setTitle(exerName);
 
+        db = new DBAdapter(this);
+        db.open();
+        Cursor c = db.getAllRecords(exerName);
+        final int rowCount = c.getCount();
         sets = new ArrayList<Pair<String, String>>();
-        for(ExerciseRecord er : WorkoutObjects.recordList) {
-            if(er.getName().equals(exerName)) {
-                //store the related set records in a local arraylist
-                for(Pair<String, String> pair : er.getSets()) {
-                    sets.add(new Pair<String, String>(pair.getL(), pair.getR()));
-                }
-                break;
-            }
+        int i = 0;
+        while(c.moveToNext()) {
+            sets.add(new Pair<String, String>(c.getString(0), c.getString(1)));
         }
+
+        //sets = new ArrayList<Pair<String, String>>();
+        //for(ExerciseRecord er : WorkoutObjects.recordList) {
+        //    if(er.getName().equals(exerName)) {
+        //        //store the related set records in a local arraylist
+        //        for(Pair<String, String> pair : er.getSets()) {
+        //            sets.add(new Pair<String, String>(pair.getL(), pair.getR()));
+        //        }
+        //        break;
+        //    }
+        //}
 
         //TODO: add all weights for each date, not just max
         //have to change record keeping for that
         sortedByDateSets = new ArrayList<Pair<String, String>>();
         for(Pair<String, String> p: sets) {
             String date = p.getL();
-            String record = "Max: " + p.getR();
+            String record = "Amount: " + p.getR();
             sortedByDateSets.add(new Pair<String, String>(date, record));
         }
 

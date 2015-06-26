@@ -52,25 +52,24 @@ public class CreateExercise extends DialogFragment{
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-            //TODO: NO MORE WRITING TO FILE - ONLY DB
+            DBAdapter db = new DBAdapter(getActivity());
+            db.open();
         	if(name == null || name.equals("")) {
         		Toast.makeText(getActivity(), "Invalid name!", Toast.LENGTH_SHORT).show();
         	}
-        	else if(!FileManagement.addGlobalExercise(name)) {
-        		Toast.makeText(getActivity(), "Exercise name already exists!", Toast.LENGTH_SHORT).show();
-        	}
-        	else{
-                DBAdapter db = new DBAdapter(getActivity());
-                db.open();
+            else if(db.doesExerciseExist(name)) {
+                Toast.makeText(getActivity(), "Exercise already exists!", Toast.LENGTH_SHORT).show();
+            }
+        	else {
                 long result = db.insertExercise(name);
                 if(result < 1) {
-                    Log.d("WORKOUT", "FAILED TO INSERT");
+                    Log.d(WorkoutObjects.DBG, "FAILED TO INSERT");
                 }
-                db.close();
-        		FileManagement.writeExerciseFile();
         		if(caller == WorkoutObjects.EXERCISE_LIST) ExerciseListFrag.notifyChange();
+                db.close();
             	dialog.dismiss();
         	}
+            db.close();
         }
     }
     

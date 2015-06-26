@@ -19,12 +19,16 @@ public class ExerciseListFrag extends DialogFragment{
 	private ListView listView;
 	
 	private int position;
+
+    static DBAdapter db;
 	
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder editExercise = new AlertDialog.Builder(getActivity());
     	final View view = getActivity().getLayoutInflater().inflate(R.layout.exercise_list, null);
     	editExercise.setView(view);
-    	
+
+        db = new DBAdapter(getActivity());
+
     	listView = (ListView) view.findViewById(R.id.exerciseListView);
     	listView.setClickable(true);
     	
@@ -52,7 +56,10 @@ public class ExerciseListFrag extends DialogFragment{
 	}
 	
 	public static void removeFromList(String name) {
-		FileManagement.removeGlobalExercise(name);
+		db.open();
+        db.deleteExercise(name);
+        db.close();
+		//FileManagement.removeGlobalExercise(name);
 		adapter.notifyDataSetChanged();
 	}
 	
